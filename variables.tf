@@ -1,5 +1,5 @@
 variable "common_tags" {
-  description = "This is to help you add tags to your cloud objects"
+  description = "This is a map type for applying tags on resources"
   type        = map
 }
 
