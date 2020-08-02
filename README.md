@@ -28,6 +28,73 @@ module "appsync" {
 }
 ```
 
+## IAM Permissions
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": [
+          "appsync:CreateApiKey",
+          "appsync:CreateDataSource",
+          "appsync:CreateFunction",
+          "appsync:CreateGraphqlApi",
+          "appsync:CreateResolver",
+          "appsync:CreateType",
+          "appsync:DeleteApiKey",
+          "appsync:DeleteDataSource",
+          "appsync:DeleteFunction",
+          "appsync:DeleteGraphqlApi",
+          "appsync:DeleteResolver",
+          "appsync:DeleteType",
+          "appsync:GetDataSource",
+          "appsync:GetFunction",
+          "appsync:GetGraphqlApi",
+          "appsync:GetIntrospectionSchema",
+          "appsync:GetResolver",
+          "appsync:GetSchemaCreationStatus",
+          "appsync:GetType",
+          "appsync:GraphQL",
+          "appsync:ListApiKeys",
+          "appsync:ListDataSources",
+          "appsync:ListFunctions",
+          "appsync:ListGraphqlApis",
+          "appsync:ListResolvers",
+          "appsync:ListResolversByFunction",
+          "appsync:ListTagsForResource",
+          "appsync:ListTypes",
+          "appsync:StartSchemaCreation",
+          "appsync:TagResource",
+          "appsync:UntagResource",
+          "appsync:UpdateApiKey",
+          "appsync:UpdateDataSource",
+          "appsync:UpdateFunction",
+          "appsync:UpdateGraphqlApi",
+          "appsync:UpdateResolver",
+          "appsync:UpdateType"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      },
+      {
+        "Action": [
+          "iam:AttachRolePolicy",
+          "iam:CreateRole",
+          "iam:DeleteRole",
+          "iam:DetachRolePolicy",
+          "iam:GetRole",
+          "iam:ListAttachedRolePolicies",
+          "iam:ListInstanceProfilesForRole",
+          "iam:PassRole",
+          "iam:UpdateRole"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      }
+    ]
+  }
+```
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
@@ -44,9 +111,12 @@ No requirements.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | api\_name | n/a | `string` | `"hitme"` | no |
-| common\_tags | This is to help you add tags to your cloud objects | `map` | n/a | yes |
+| appsync\_rolename | The name of the role to attach to appsync | `string` | `"Appsync"` | no |
+| common\_tags | This is a map type for applying tags on resources | `map` | n/a | yes |
 | datasource\_user\_name | n/a | `string` | `"hitme_user"` | no |
 | lambda\_resolver\_arn | n/a | `string` | n/a | yes |
+| request\_template | n/a | `any` | n/a | yes |
+| response\_template | n/a | `any` | n/a | yes |
 
 ## Outputs
 

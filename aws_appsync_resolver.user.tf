@@ -4,6 +4,6 @@ resource "aws_appsync_resolver" "user" {
   field             = "register"
   type              = "Mutation"
   data_source       = aws_appsync_datasource.user.name
-  request_template  = ""
-  response_template = ""
+  request_template  = var.request_template
+  response_template = var.response_template
 }

@@ -1,13 +1,11 @@
-#Makefile
-
-# Linux (default)
-RM  = rm .terraform/modules/ -fr
-BLAT= rm .terraform/ -fr
-
-# Windows
-ifeq ($(OS), Windows_NT)
-   RM   = del /Q .terraform\modules\
-   BLAT = del /Q .terraform\
+# Makefile
+ifdef OS
+   BLAT = $(powershell  -noprofile rm .\.terraform\ -force -recurse)
+else
+   ifeq ($(shell uname), Linux)
+      RM  = rm .terraform/modules/ -fr
+      BLAT= rm .terraform/ -fr
+   endif
 endif
 
 .PHONY: all
@@ -18,10 +16,15 @@ init:
 	$(RM)
 	terraform init -reconfigure
 
-plan: init
+plan:
 	terraform plan -refresh=true
 
-build: init
+p:
+	terraform plan -refresh=true
+
+apply: build
+
+build:
 	terraform apply -auto-approve
 
 check: init
@@ -34,8 +37,8 @@ docs:
 	terraform-docs md . > README.md
 
 valid:
-	tflint
 	terraform fmt -check=true -diff=true
+	checkov -d . --external-checks-dir ../../checkov
 
 target:
 	@read -p "Enter Module to target:" MODULE;
@@ -43,4 +46,3 @@ target:
 
 purge:
 	$(BLAT)
-	terraform init -reconfigure

@@ -16,3 +16,9 @@ variable "datasource_user_name" {
 variable "lambda_resolver_arn" {
   type = string
 }
+
+variable "request_template" {
+}
+
+variable "response_template" {
+}
