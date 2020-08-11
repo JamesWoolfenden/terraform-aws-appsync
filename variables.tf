@@ -18,7 +18,13 @@ variable "lambda_resolver_arn" {
 }
 
 variable "request_template" {
+  type = string
 }
 
 variable "response_template" {
+  type = string
+}
+
+variable "schema" {
+  type = string
 }
