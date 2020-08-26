@@ -115,8 +115,11 @@ No requirements.
 | common\_tags | This is a map type for applying tags on resources | `map` | n/a | yes |
 | datasource\_user\_name | n/a | `string` | `"hitme_user"` | no |
 | lambda\_resolver\_arn | n/a | `string` | n/a | yes |
-| request\_template | n/a | `any` | n/a | yes |
-| response\_template | n/a | `any` | n/a | yes |
+| request\_template | n/a | `string` | n/a | yes |
+| resolver\_field | (optional) describe your variable | `string` | n/a | yes |
+| resolver\_type | (optional) describe your variable | `string` | n/a | yes |
+| response\_template | n/a | `string` | n/a | yes |
+| schema | n/a | `string` | n/a | yes |
 
 ## Outputs
 
