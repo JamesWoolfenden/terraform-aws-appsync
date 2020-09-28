@@ -95,7 +95,6 @@ module "appsync" {
 ```
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-
 ## Requirements
 
 No requirements.
@@ -103,31 +102,31 @@ No requirements.
 ## Providers
 
 | Name | Version |
-| ---- | ------- |
-| aws  | n/a     |
+|------|---------|
+| aws | n/a |
 
 ## Inputs
 
-| Name                 | Description                                       | Type     | Default        | Required |
-| -------------------- | ------------------------------------------------- | -------- | -------------- | :------: |
-| api_name             | n/a                                               | `string` | `"hitme"`      |    no    |
-| appsync_rolename     | The name of the role to attach to appsync         | `string` | `"Appsync"`    |    no    |
-| common_tags          | This is a map type for applying tags on resources | `map`    | n/a            |   yes    |
-| datasource_user_name | n/a                                               | `string` | `"hitme_user"` |    no    |
-| lambda_resolver_arn  | n/a                                               | `string` | n/a            |   yes    |
-| request_template     | n/a                                               | `string` | n/a            |   yes    |
-| resolver_field       | (optional) describe your variable                 | `string` | n/a            |   yes    |
-| resolver_type        | (optional) describe your variable                 | `string` | n/a            |   yes    |
-| response_template    | n/a                                               | `string` | n/a            |   yes    |
-| schema               | n/a                                               | `string` | n/a            |   yes    |
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| api\_name | n/a | `string` | `"hitme"` | no |
+| appsync\_rolename | The name of the role to attach to appsync | `string` | `"Appsync"` | no |
+| common\_tags | This is a map type for applying tags on resources | `map` | n/a | yes |
+| datasource\_user\_name | n/a | `string` | `"hitme_user"` | no |
+| lambda\_resolver\_arn | n/a | `string` | n/a | yes |
+| request\_template | n/a | `string` | n/a | yes |
+| resolver\_field | (optional) describe your variable | `string` | n/a | yes |
+| resolver\_type | (optional) describe your variable | `string` | n/a | yes |
+| response\_template | n/a | `string` | n/a | yes |
+| schema | n/a | `string` | n/a | yes |
 
 ## Outputs
 
-| Name       | Description |
-| ---------- | ----------- |
-| api        | n/a         |
-| datasource | n/a         |
-| resolver   | n/a         |
+| Name | Description |
+|------|-------------|
+| api | n/a |
+| datasource | n/a |
+| resolver | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
