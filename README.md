@@ -1,5 +1,3 @@
-[![Slalom][logo]](https://slalom.com)
-
 # terraform-aws-appsync
 
 [![Build Status](https://github.com/JamesWoolfenden/terraform-aws-appsync/workflows/Verify%20and%20Bump/badge.svg?branch=master)](https://github.com/JamesWoolfenden/terraform-aws-appsync)
@@ -32,70 +30,72 @@ module "appsync" {
 
 ```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Action": [
-          "appsync:CreateApiKey",
-          "appsync:CreateDataSource",
-          "appsync:CreateFunction",
-          "appsync:CreateGraphqlApi",
-          "appsync:CreateResolver",
-          "appsync:CreateType",
-          "appsync:DeleteApiKey",
-          "appsync:DeleteDataSource",
-          "appsync:DeleteFunction",
-          "appsync:DeleteGraphqlApi",
-          "appsync:DeleteResolver",
-          "appsync:DeleteType",
-          "appsync:GetDataSource",
-          "appsync:GetFunction",
-          "appsync:GetGraphqlApi",
-          "appsync:GetIntrospectionSchema",
-          "appsync:GetResolver",
-          "appsync:GetSchemaCreationStatus",
-          "appsync:GetType",
-          "appsync:GraphQL",
-          "appsync:ListApiKeys",
-          "appsync:ListDataSources",
-          "appsync:ListFunctions",
-          "appsync:ListGraphqlApis",
-          "appsync:ListResolvers",
-          "appsync:ListResolversByFunction",
-          "appsync:ListTagsForResource",
-          "appsync:ListTypes",
-          "appsync:StartSchemaCreation",
-          "appsync:TagResource",
-          "appsync:UntagResource",
-          "appsync:UpdateApiKey",
-          "appsync:UpdateDataSource",
-          "appsync:UpdateFunction",
-          "appsync:UpdateGraphqlApi",
-          "appsync:UpdateResolver",
-          "appsync:UpdateType"
-        ],
-        "Effect": "Allow",
-        "Resource": "*"
-      },
-      {
-        "Action": [
-          "iam:AttachRolePolicy",
-          "iam:CreateRole",
-          "iam:DeleteRole",
-          "iam:DetachRolePolicy",
-          "iam:GetRole",
-          "iam:ListAttachedRolePolicies",
-          "iam:ListInstanceProfilesForRole",
-          "iam:PassRole",
-          "iam:UpdateRole"
-        ],
-        "Effect": "Allow",
-        "Resource": "*"
-      }
-    ]
-  }
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "appsync:CreateApiKey",
+        "appsync:CreateDataSource",
+        "appsync:CreateFunction",
+        "appsync:CreateGraphqlApi",
+        "appsync:CreateResolver",
+        "appsync:CreateType",
+        "appsync:DeleteApiKey",
+        "appsync:DeleteDataSource",
+        "appsync:DeleteFunction",
+        "appsync:DeleteGraphqlApi",
+        "appsync:DeleteResolver",
+        "appsync:DeleteType",
+        "appsync:GetDataSource",
+        "appsync:GetFunction",
+        "appsync:GetGraphqlApi",
+        "appsync:GetIntrospectionSchema",
+        "appsync:GetResolver",
+        "appsync:GetSchemaCreationStatus",
+        "appsync:GetType",
+        "appsync:GraphQL",
+        "appsync:ListApiKeys",
+        "appsync:ListDataSources",
+        "appsync:ListFunctions",
+        "appsync:ListGraphqlApis",
+        "appsync:ListResolvers",
+        "appsync:ListResolversByFunction",
+        "appsync:ListTagsForResource",
+        "appsync:ListTypes",
+        "appsync:StartSchemaCreation",
+        "appsync:TagResource",
+        "appsync:UntagResource",
+        "appsync:UpdateApiKey",
+        "appsync:UpdateDataSource",
+        "appsync:UpdateFunction",
+        "appsync:UpdateGraphqlApi",
+        "appsync:UpdateResolver",
+        "appsync:UpdateType"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
+      "Action": [
+        "iam:AttachRolePolicy",
+        "iam:CreateRole",
+        "iam:DeleteRole",
+        "iam:DetachRolePolicy",
+        "iam:GetRole",
+        "iam:ListAttachedRolePolicies",
+        "iam:ListInstanceProfilesForRole",
+        "iam:PassRole",
+        "iam:UpdateRole"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
 ```
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
 ## Requirements
 
 No requirements.
@@ -103,31 +103,31 @@ No requirements.
 ## Providers
 
 | Name | Version |
-|------|---------|
-| aws | n/a |
+| ---- | ------- |
+| aws  | n/a     |
 
 ## Inputs
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| api\_name | n/a | `string` | `"hitme"` | no |
-| appsync\_rolename | The name of the role to attach to appsync | `string` | `"Appsync"` | no |
-| common\_tags | This is a map type for applying tags on resources | `map` | n/a | yes |
-| datasource\_user\_name | n/a | `string` | `"hitme_user"` | no |
-| lambda\_resolver\_arn | n/a | `string` | n/a | yes |
-| request\_template | n/a | `string` | n/a | yes |
-| resolver\_field | (optional) describe your variable | `string` | n/a | yes |
-| resolver\_type | (optional) describe your variable | `string` | n/a | yes |
-| response\_template | n/a | `string` | n/a | yes |
-| schema | n/a | `string` | n/a | yes |
+| Name                 | Description                                       | Type     | Default        | Required |
+| -------------------- | ------------------------------------------------- | -------- | -------------- | :------: |
+| api_name             | n/a                                               | `string` | `"hitme"`      |    no    |
+| appsync_rolename     | The name of the role to attach to appsync         | `string` | `"Appsync"`    |    no    |
+| common_tags          | This is a map type for applying tags on resources | `map`    | n/a            |   yes    |
+| datasource_user_name | n/a                                               | `string` | `"hitme_user"` |    no    |
+| lambda_resolver_arn  | n/a                                               | `string` | n/a            |   yes    |
+| request_template     | n/a                                               | `string` | n/a            |   yes    |
+| resolver_field       | (optional) describe your variable                 | `string` | n/a            |   yes    |
+| resolver_type        | (optional) describe your variable                 | `string` | n/a            |   yes    |
+| response_template    | n/a                                               | `string` | n/a            |   yes    |
+| schema               | n/a                                               | `string` | n/a            |   yes    |
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| api | n/a |
-| datasource | n/a |
-| resolver | n/a |
+| Name       | Description |
+| ---------- | ----------- |
+| api        | n/a         |
+| datasource | n/a         |
+| resolver   | n/a         |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
@@ -151,7 +151,7 @@ Please use the [issue tracker](https://github.com/JamesWoolfenden/terraform-aws-
 
 ## Copyrights
 
-Copyright © 2019-2020 [Slalom, LLC](https://slalom.com)
+Copyright © 2019-2020 James Woolfenden
 
 ## License
 
@@ -160,19 +160,19 @@ Copyright © 2019-2020 [Slalom, LLC](https://slalom.com)
 See [LICENSE](LICENSE) for full details.
 
 Licensed to the Apache Software Foundation (ASF) under one
-or more contributor license agreements.  See the NOTICE file
+or more contributor license agreements. See the NOTICE file
 distributed with this work for additional information
-regarding copyright ownership.  The ASF licenses this file
+regarding copyright ownership. The ASF licenses this file
 to you under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance
-with the License.  You may obtain a copy of the License at
+with the License. You may obtain a copy of the License at
 
 <https://www.apache.org/licenses/LICENSE-2.0>
 
 Unless required by applicable law or agreed to in writing,
 software distributed under the License is distributed on an
 "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, either express or implied.  See the License for the
+KIND, either express or implied. See the License for the
 specific language governing permissions and limitations
 under the License.
 
@@ -182,12 +182,9 @@ under the License.
 
 [jameswoolfenden_homepage]: https://github.com/jameswoolfenden
 [jameswoolfenden_avatar]: https://github.com/jameswoolfenden.png?size=150
-[logo]: https://gist.githubusercontent.com/JamesWoolfenden/5c457434351e9fe732ca22b78fdd7d5e/raw/15933294ae2b00f5dba6557d2be88f4b4da21201/slalom-logo.png
-[website]: https://slalom.com
 [github]: https://github.com/jameswoolfenden
 [linkedin]: https://www.linkedin.com/in/jameswoolfenden/
 [twitter]: https://twitter.com/JimWoolfenden
-
 [share_twitter]: https://twitter.com/intent/tweet/?text=terraform-aws-appsync&url=https://github.com/JamesWoolfenden/terraform-aws-appsync
 [share_linkedin]: https://www.linkedin.com/shareArticle?mini=true&title=terraform-aws-appsync&url=https://github.com/JamesWoolfenden/terraform-aws-appsync
 [share_reddit]: https://reddit.com/submit/?url=https://github.com/JamesWoolfenden/terraform-aws-appsync
