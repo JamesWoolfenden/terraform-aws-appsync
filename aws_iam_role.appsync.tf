@@ -14,6 +14,7 @@ resource "aws_iam_role" "appsync" {
   ]
 }
 POLICY
+  tags               = var.common_tags
 }
 
 resource "aws_iam_role_policy_attachment" "attach" {
