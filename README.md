@@ -97,13 +97,15 @@ module "appsync" {
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| aws | 3.20.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | n/a |
+| aws | 3.20.0 |
 
 ## Inputs
 
@@ -111,7 +113,7 @@ No requirements.
 |------|-------------|------|---------|:--------:|
 | api\_name | n/a | `string` | `"hitme"` | no |
 | appsync\_rolename | The name of the role to attach to appsync | `string` | `"Appsync"` | no |
-| common\_tags | This is a map type for applying tags on resources | `map` | n/a | yes |
+| common\_tags | This is a map type for applying tags on resources | `map(any)` | n/a | yes |
 | datasource\_user\_name | n/a | `string` | `"hitme_user"` | no |
 | lambda\_resolver\_arn | n/a | `string` | n/a | yes |
 | request\_template | n/a | `string` | n/a | yes |

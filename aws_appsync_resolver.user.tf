@@ -10,11 +10,11 @@ resource "aws_appsync_resolver" "user" {
 
 
 variable "resolver_type" {
-  type = string
+  type        = string
   description = "(optional) describe your variable"
 }
 
 variable "resolver_field" {
-  type = string
+  type        = string
   description = "(optional) describe your variable"
 }
