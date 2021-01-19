@@ -20,6 +20,7 @@ lambda
 *~HEAD
 *backup
 *.bak
+.terraform.lock.hcl
 .terraform.tfstate.lock.info
 .terraform.lock.hcl
 *.log
