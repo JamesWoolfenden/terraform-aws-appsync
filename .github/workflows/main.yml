@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@master
         with:
           ref: master
           token: ${{ github.token }}
@@ -26,6 +26,7 @@ jobs:
         uses: bridgecrewio/checkov-action@master
         with:
           directory: "example/examplea"
+          framework: terraform
       - name: Terraform Apply
         if: ${{ !env.ACT }}
         id: apply
