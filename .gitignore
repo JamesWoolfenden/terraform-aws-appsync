@@ -13,6 +13,7 @@ __pycache__/
 *.ini
 *~HEAD
 *backup
+*.orig
 *.ini
 tmp
 lambda
