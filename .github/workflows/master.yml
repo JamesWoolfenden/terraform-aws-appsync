@@ -1,9 +1,14 @@
 ---
+# yamllint disable rule:line-length
 name: Verify and Bump
 on:
   push:
     branches:
       - master
+env:
+  terraform: 0.14.5
+  tf_target_dir: example/examplea
+  branch: master
 jobs:
   terraform:
     runs-on: ubuntu-latest
@@ -11,47 +16,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: master
+          ref: ${{ env.branch }}
           token: ${{ github.token }}
-      - name: "Terraform Init"
+      - name: Terraform Init
         uses: hashicorp/terraform-github-actions@master
         with:
-          tf_actions_version: 0.14.5
-          tf_actions_subcommand: "init"
-          tf_actions_working_dir: "example/examplea"
-      - name: "Terraform Validate"
+          tf_actions_version: ${{ env.terraform }}
+          tf_actions_subcommand: init
+          tf_actions_working_dir: ${{ env.tf_target_dir }}
+      - name: Terraform Validate
         uses: hashicorp/terraform-github-actions@master
         with:
-          tf_actions_version: 0.14.5
-          tf_actions_subcommand: "validate"
-          tf_actions_working_dir: "example/examplea"
-      - name: Terraform Apply
-        if: ${{ !env.ACT }}
-        uses: hashicorp/terraform-github-actions@master
-        with:
-          tf_actions_version: 0.14.5
-          tf_actions_subcommand: "apply"
-          tf_actions_working_dir: "example/examplea"
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - name: Terraform Destroy
-        if: ${{ !env.ACT }}
-        uses: hashicorp/terraform-github-actions@master
-        with:
-          tf_actions_version: 0.14.5
-          tf_actions_subcommand: "destroy"
-          tf_actions_working_dir: "example/examplea"
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          tf_actions_version: ${{ env.terraform }}
+          tf_actions_subcommand: validate
+          tf_actions_working_dir: ${{ env.tf_target_dir }}
   security:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: master
+          ref: ${{ env.branch }}
           token: ${{ github.token }}
 
       - name: Checkov action
