@@ -8,7 +8,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: master
           token: ${{ github.token }}
       - name: "Terraform Init"
         uses: hashicorp/terraform-github-actions@master
@@ -28,9 +27,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: master
           token: ${{ github.token }}
-
       - name: Checkov action
         uses: bridgecrewio/checkov-action@master
         with:
