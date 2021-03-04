@@ -2,6 +2,8 @@
 # yamllint disable rule:line-length
 name: Verify and Bump
 on:
+  schedule:
+    - cron: '00 7 * * SUN'
   push:
     branches:
       - master
@@ -43,7 +45,7 @@ jobs:
         id: checkov
         uses: bridgecrewio/checkov-action@master
         with:
-          directory: "example/examplea"
+          directory: ${{ env.tf_target_dir }}
           framework: terraform
           args: "--output cli  --bc-api-key ${{ secrets.BC_API_KEY }}"
   version:
