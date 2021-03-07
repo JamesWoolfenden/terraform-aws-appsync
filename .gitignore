@@ -27,3 +27,4 @@ tfplan.json
 *.log
 tf.json
 tf.plan
+output/*.json
