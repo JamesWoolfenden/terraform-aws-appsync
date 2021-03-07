@@ -29,6 +29,7 @@ repos:
     rev: 0.0.2
     hooks:
       - id: shell-lint
+        exclude: template|\.template$
   - repo: git://github.com/igorshubovych/markdownlint-cli
     rev: v0.27.1
     hooks:
