@@ -27,3 +27,5 @@ tf.plan
 *.log
 output/*.json
 secrets.auto.tfvars
+checksums.txt
+*.tar.gz
