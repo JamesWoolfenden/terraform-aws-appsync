@@ -21,6 +21,18 @@ jobs:
         with:
           ref: ${{ env.branch }}
           token: ${{ github.token }}
+      - name: Config Terraform plugin cache
+        run: |
+          echo 'plugin_cache_dir="$HOME/.terraform.d/plugin-cache"' >~/.terraformrc
+          mkdir --parents ~/.terraform.d/plugin-cache
+      - name: Cache Terraform
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.terraform.d/plugin-cache
+          key: ${{ runner.os }}-terraform-${{ hashFiles('**/.terraform.lock.hcl') }}
+          restore-keys: |
+            ${{ runner.os }}-terraform-
       - name: Terraform Init
         uses: hashicorp/terraform-github-actions@master
         with:
@@ -55,10 +67,9 @@ jobs:
           python-version: 3.8
       - run: |
           pip3 install lastversion
-          now=$(lastversion terraform-docs)
+          lastversion terraform-docs --assets -d --verbose
           mkdir $GITHUB_WORKSPACE/bin
-          curl -L https://github.com/terraform-docs/terraform-docs/releases/download/v${now}/terraform-docs-v${now}-$(uname)-amd64.tar.gz -o terraform-docs.tar.gz
-          tar -xvf terraform-docs.tar.gz --directory $GITHUB_WORKSPACE/bin
+          tar -xvf terraform-docs*.tar.gz --directory $GITHUB_WORKSPACE/bin
           chmod +x $GITHUB_WORKSPACE/bin/terraform-docs
           echo "$GITHUB_WORKSPACE/bin" >> $GITHUB_PATH
       - uses: pre-commit/action@v2.0.0
@@ -68,7 +79,6 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Bump version and push tag
-        if: ${{ !env.ACT }}
         uses: anothrNick/github-tag-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
