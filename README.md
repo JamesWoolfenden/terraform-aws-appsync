@@ -107,7 +107,7 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.26.0 |
 
 ## Modules
 
@@ -167,7 +167,7 @@ Please use the [issue tracker](https://github.com/JamesWoolfenden/terraform-aws-
 
 ## Copyrights
 
-Copyright 2019-2021 James Woolfenden
+Copyright 2019-2022 James Woolfenden
 
 ## License
 
