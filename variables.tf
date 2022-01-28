@@ -28,3 +28,25 @@ variable "response_template" {
 variable "schema" {
   type = string
 }
+
+variable "log_level" {
+  type        = string
+  default     = "ERROR"
+  description = "log level for the api"
+}
+
+
+variable "retention_in_days" {
+  type        = number
+  default     = 90
+  description = "How long Cloudwatch retains your logs"
+}
+
+variable "kms_key_id" {
+  type        = string
+  description = "KMS key arn"
+}
+
+variable "web_acl_arn" {
+  type = string
+}

@@ -9,4 +9,13 @@ module "appsync" {
   schema               = file("${path.module}/templates/schema")
   resolver_field       = "singlePost"
   resolver_type        = "Query"
+  kms_key_id           = aws_kms_key.example.arn
+  web_acl_arn          = module.waf2.aws_wafv2_web_acl.arn
+}
+
+
+module "waf2" {
+  source      = "JamesWoolfenden/waf2/aws"
+  version     = "0.0.5"
+  kms_key_arn = aws_kms_key.example.arn
 }
