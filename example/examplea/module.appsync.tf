@@ -16,6 +16,6 @@ module "appsync" {
 
 module "waf2" {
   source      = "JamesWoolfenden/waf2/aws"
-  version     = "0.0.5"
+  version     = "0.1.3"
   kms_key_arn = aws_kms_key.example.arn
 }
