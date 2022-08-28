@@ -98,70 +98,117 @@ No modules.
 ## Policy
 
 <!-- BEGINNING OF PRE-COMMIT-PIKE DOCS HOOK -->
+The Policy required is:
+
 ```json
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": [
-        "appsync:CreateApiKey",
-        "appsync:CreateDataSource",
-        "appsync:CreateFunction",
-        "appsync:CreateGraphqlApi",
-        "appsync:CreateResolver",
-        "appsync:CreateType",
-        "appsync:DeleteApiKey",
-        "appsync:DeleteDataSource",
-        "appsync:DeleteFunction",
-        "appsync:DeleteGraphqlApi",
-        "appsync:DeleteResolver",
-        "appsync:DeleteType",
-        "appsync:GetDataSource",
-        "appsync:GetFunction",
-        "appsync:GetGraphqlApi",
-        "appsync:GetIntrospectionSchema",
-        "appsync:GetResolver",
-        "appsync:GetSchemaCreationStatus",
-        "appsync:GetType",
-        "appsync:GraphQL",
-        "appsync:ListApiKeys",
-        "appsync:ListDataSources",
-        "appsync:ListFunctions",
-        "appsync:ListGraphqlApis",
-        "appsync:ListResolvers",
-        "appsync:ListResolversByFunction",
-        "appsync:ListTagsForResource",
-        "appsync:ListTypes",
-        "appsync:StartSchemaCreation",
-        "appsync:TagResource",
-        "appsync:UntagResource",
-        "appsync:UpdateApiKey",
-        "appsync:UpdateDataSource",
-        "appsync:UpdateFunction",
-        "appsync:UpdateGraphqlApi",
-        "appsync:UpdateResolver",
-        "appsync:UpdateType"
-      ],
-      "Effect": "Allow",
-      "Resource": "*"
-    },
-    {
-      "Action": [
-        "iam:AttachRolePolicy",
-        "iam:CreateRole",
-        "iam:DeleteRole",
-        "iam:DetachRolePolicy",
-        "iam:GetRole",
-        "iam:ListAttachedRolePolicies",
-        "iam:ListInstanceProfilesForRole",
-        "iam:PassRole",
-        "iam:UpdateRole"
-      ],
-      "Effect": "Allow",
-      "Resource": "*"
-    }
-  ]
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "firehose:CreateDeliveryStream",
+                "firehose:DeleteDeliveryStream",
+                "firehose:DescribeDeliveryStream",
+                "firehose:ListTagsForDeliveryStream"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "iam:AttachRolePolicy",
+                "iam:CreateRole",
+                "iam:DeleteRole",
+                "iam:DetachRolePolicy",
+                "iam:GetRole",
+                "iam:ListAttachedRolePolicies",
+                "iam:ListInstanceProfilesForRole",
+                "iam:ListRolePolicies",
+                "iam:PassRole",
+                "iam:TagRole"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": [
+                "kms:CreateKey",
+                "kms:DescribeKey",
+                "kms:EnableKeyRotation",
+                "kms:GetKeyPolicy",
+                "kms:GetKeyRotationStatus",
+                "kms:ListResourceTags",
+                "kms:ScheduleKeyDeletion"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "VisualEditor3",
+            "Effect": "Allow",
+            "Action": [
+                "logs:AssociateKmsKey",
+                "logs:CreateLogGroup",
+                "logs:DeleteLogGroup",
+                "logs:DeleteRetentionPolicy",
+                "logs:DescribeLogGroups",
+                "logs:DisassociateKmsKey",
+                "logs:ListTagsLogGroup",
+                "logs:PutRetentionPolicy"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "VisualEditor4",
+            "Effect": "Allow",
+            "Action": [
+                "s3:CreateBucket",
+                "s3:DeleteBucket",
+                "s3:GetAccelerateConfiguration",
+                "s3:GetBucketAcl",
+                "s3:GetBucketCORS",
+                "s3:GetBucketLogging",
+                "s3:GetBucketObjectLockConfiguration",
+                "s3:GetBucketPolicy",
+                "s3:GetBucketPublicAccessBlock",
+                "s3:GetBucketRequestPayment",
+                "s3:GetBucketTagging",
+                "s3:GetBucketVersioning",
+                "s3:GetBucketWebsite",
+                "s3:GetEncryptionConfiguration",
+                "s3:GetLifecycleConfiguration",
+                "s3:GetObject",
+                "s3:GetObjectAcl",
+                "s3:GetReplicationConfiguration",
+                "s3:ListAllMyBuckets",
+                "s3:ListBucket",
+                "s3:PutBucketAcl",
+                "s3:PutBucketPublicAccessBlock",
+                "s3:PutEncryptionConfiguration"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "VisualEditor5",
+            "Effect": "Allow",
+            "Action": [
+                "wafv2:CreateRuleGroup",
+                "wafv2:CreateWebACL",
+                "wafv2:DeleteRuleGroup",
+                "wafv2:DeleteWebACL",
+                "wafv2:GetRuleGroup",
+                "wafv2:GetWebACL",
+                "wafv2:ListTagsForResource",
+                "wafv2:UpdateRuleGroup"
+            ],
+            "Resource": "*"
+        }
+    ]
 }
+
 ```
 <!-- END OF PRE-COMMIT-PIKE DOCS HOOK -->
 
