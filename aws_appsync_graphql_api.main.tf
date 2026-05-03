@@ -1,4 +1,5 @@
 resource "aws_appsync_graphql_api" "main" {
+  # checkov:skip=CKV2_AWS_78: WAF WebACL association managed outside this module
   authentication_type = "API_KEY"
   name                = var.api_name
   schema              = var.schema

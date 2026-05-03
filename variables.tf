@@ -29,7 +29,7 @@ variable "log_level" {
 }
 variable "retention_in_days" {
   type        = number
-  default     = 90
+  default     = 365
   description = "How long Cloudwatch retains your logs"
 }
 variable "kms_key_id" {
