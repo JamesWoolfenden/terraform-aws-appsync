@@ -113,6 +113,102 @@ resource "aws_iam_policy" "terraform_pike" {
             "Sid": "VisualEditor0",
             "Effect": "Allow",
             "Action": [
+                "amplify:DisassociateWebACL",
+                "amplify:GetWebACLForResource"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "apigateway:SetWebACL"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": [
+                "apprunner:AssociateWebAcl",
+                "apprunner:DescribeWebAclForService",
+                "apprunner:DisassociateWebAcl",
+                "apprunner:ListAssociatedServicesForWebAcl"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor3",
+            "Effect": "Allow",
+            "Action": [
+                "appsync:CreateApi",
+                "appsync:CreateDataSource",
+                "appsync:CreateResolver",
+                "appsync:DeleteApi",
+                "appsync:DeleteDataSource",
+                "appsync:DeleteResolver",
+                "appsync:GetApi",
+                "appsync:GetDataSource",
+                "appsync:GetResolver",
+                "appsync:ListTagsForResource",
+                "appsync:SetWebACL",
+                "appsync:TagResource",
+                "appsync:UntagResource",
+                "appsync:UpdateApi",
+                "appsync:UpdateDataSource",
+                "appsync:UpdateResolver"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor4",
+            "Effect": "Allow",
+            "Action": [
+                "cognito-idp:AssociateWebACL",
+                "cognito-idp:DisassociateWebACL",
+                "cognito-idp:GetWebACLForResource",
+                "cognito-idp:ListResourcesForWebACL"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor5",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:AssociateVerifiedAccessInstanceWebAcl",
+                "ec2:DescribeVerifiedAccessInstanceWebAclAssociations",
+                "ec2:DisassociateVerifiedAccessInstanceWebAcl",
+                "ec2:GetVerifiedAccessInstanceWebAcl"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor6",
+            "Effect": "Allow",
+            "Action": [
+                "elasticloadbalancing:SetWebACL",
+                "elasticloadbalancing:SetWebAcl"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor7",
+            "Effect": "Allow",
+            "Action": [
                 "iam:AttachRolePolicy",
                 "iam:CreateRole",
                 "iam:DeleteRole",
@@ -121,12 +217,16 @@ resource "aws_iam_policy" "terraform_pike" {
                 "iam:ListAttachedRolePolicies",
                 "iam:ListInstanceProfilesForRole",
                 "iam:ListRolePolicies",
-                "iam:TagRole"
+                "iam:PassRole",
+                "iam:TagRole",
+                "iam:UntagRole"
             ],
-            "Resource": "*"
+            "Resource": [
+                "*"
+            ]
         },
         {
-            "Sid": "VisualEditor1",
+            "Sid": "VisualEditor8",
             "Effect": "Allow",
             "Action": [
                 "logs:AssociateKmsKey",
@@ -135,10 +235,38 @@ resource "aws_iam_policy" "terraform_pike" {
                 "logs:DeleteRetentionPolicy",
                 "logs:DescribeLogGroups",
                 "logs:DisassociateKmsKey",
+                "logs:ListTagsForResource",
                 "logs:ListTagsLogGroup",
                 "logs:PutRetentionPolicy"
             ],
-            "Resource": "*"
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor9",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor10",
+            "Effect": "Allow",
+            "Action": [
+                "wafv2:AssociateWebACL",
+                "wafv2:DisassociateWebACL",
+                "wafv2:GetPermissionPolicy",
+                "wafv2:GetWebACL",
+                "wafv2:GetWebACLForResource",
+                "wafv2:PutPermissionPolicy"
+            ],
+            "Resource": [
+                "*"
+            ]
         }
     ]
 })

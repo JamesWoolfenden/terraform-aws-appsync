@@ -5,15 +5,12 @@ variable "common_tags" {
     module = "Terraform-aws-appsync"
   }
 }
-
 variable "api_name" {
   type = string
 }
-
 variable "datasource_user_name" {
   type = string
 }
-
 variable "lambda_resolver_arn" {
   type = string
 }

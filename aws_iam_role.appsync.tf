@@ -16,12 +16,10 @@ resource "aws_iam_role" "appsync" {
 POLICY
   tags               = var.common_tags
 }
-
 resource "aws_iam_role_policy_attachment" "attach" {
   role       = aws_iam_role.appsync.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSAppSyncPushToCloudWatchLogs"
 }
-
 variable "appsync_rolename" {
   type        = string
   description = "The name of the role to attach to appsync"
