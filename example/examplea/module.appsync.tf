@@ -13,6 +13,6 @@ module "appsync" {
   web_acl_arn          = module.waf2.aws_wafv2_web_acl.arn
 }
 module "waf2" {
-  source = "git::https://github.com/JamesWoolfenden/terraform-aws-waf2.git?ref=718f0aa1a0657a021ea96d224f938995fe85be02" #v0.1.17
+  source      = "git::https://github.com/JamesWoolfenden/terraform-aws-waf2.git?ref=718f0aa1a0657a021ea96d224f938995fe85be02" #v0.1.17
   kms_key_arn = aws_kms_key.example.arn
 }
