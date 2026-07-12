@@ -18,8 +18,6 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 
 This is just a very basic example.
 
-![alt text](./diagram/api.png)
-
 Include **module.appsync.tf** this repository as a module in your existing terraform code:
 
 ```terraform
@@ -58,40 +56,42 @@ No modules.
 
 | Name | Type |
 | ---- | ---- |
+| [aws_appsync_api_key.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_api_key) | resource |
 | [aws_appsync_datasource.user](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_datasource) | resource |
 | [aws_appsync_graphql_api.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_graphql_api) | resource |
 | [aws_appsync_resolver.user](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appsync_resolver) | resource |
 | [aws_cloudwatch_log_group.api](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
 | [aws_iam_role.appsync](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy.invoke_lambda](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
 | [aws_iam_role_policy_attachment.attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
-| [aws_wafv2_web_acl_association.example](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/wafv2_web_acl_association) | resource |
+| [aws_wafv2_web_acl_association.waf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/wafv2_web_acl_association) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 | ---- | ----------- | ---- | ------- | :------: |
-| <a name="input_api_name"></a> [api\_name](#input\_api\_name) | n/a | `string` | `"hitme"` | no |
+| <a name="input_api_key_expires"></a> [api\_key\_expires](#input\_api\_key\_expires) | RFC3339 expiry timestamp for the AppSync API key. Leave null to use AWS's default 7-day expiry. | `string` | `null` | no |
+| <a name="input_api_name"></a> [api\_name](#input\_api\_name) | Name of the AppSync api | `string` | `"hitme"` | no |
 | <a name="input_appsync_rolename"></a> [appsync\_rolename](#input\_appsync\_rolename) | The name of the role to attach to appsync | `string` | `"Appsync"` | no |
-| <a name="input_common_tags"></a> [common\_tags](#input\_common\_tags) | This is a map type for applying tags on resources | `map(any)` | n/a | yes |
-| <a name="input_datasource_user_name"></a> [datasource\_user\_name](#input\_datasource\_user\_name) | n/a | `string` | `"hitme_user"` | no |
+| <a name="input_datasource_user_name"></a> [datasource\_user\_name](#input\_datasource\_user\_name) | Name of the datasource user | `string` | `"hitme_user"` | no |
 | <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | KMS key arn | `string` | n/a | yes |
-| <a name="input_lambda_resolver_arn"></a> [lambda\_resolver\_arn](#input\_lambda\_resolver\_arn) | n/a | `string` | n/a | yes |
+| <a name="input_lambda_resolver_arn"></a> [lambda\_resolver\_arn](#input\_lambda\_resolver\_arn) | ARN of the Lambda function used as the resolver | `string` | n/a | yes |
 | <a name="input_log_level"></a> [log\_level](#input\_log\_level) | log level for the api | `string` | `"ERROR"` | no |
-| <a name="input_request_template"></a> [request\_template](#input\_request\_template) | n/a | `string` | n/a | yes |
-| <a name="input_resolver_field"></a> [resolver\_field](#input\_resolver\_field) | (optional) describe your variable | `string` | n/a | yes |
-| <a name="input_resolver_type"></a> [resolver\_type](#input\_resolver\_type) | (optional) describe your variable | `string` | n/a | yes |
-| <a name="input_response_template"></a> [response\_template](#input\_response\_template) | n/a | `string` | n/a | yes |
+| <a name="input_request_template"></a> [request\_template](#input\_request\_template) | Velocity template for the resolver request mapping | `string` | n/a | yes |
+| <a name="input_resolver_field"></a> [resolver\_field](#input\_resolver\_field) | The field for which to create the resolver | `string` | n/a | yes |
+| <a name="input_resolver_type"></a> [resolver\_type](#input\_resolver\_type) | The type of the resolver (e.g., Query, Mutation, Subscription) | `string` | n/a | yes |
+| <a name="input_response_template"></a> [response\_template](#input\_response\_template) | Velocity template for the resolver response mapping | `string` | n/a | yes |
 | <a name="input_retention_in_days"></a> [retention\_in\_days](#input\_retention\_in\_days) | How long Cloudwatch retains your logs | `number` | `365` | no |
-| <a name="input_schema"></a> [schema](#input\_schema) | n/a | `string` | n/a | yes |
-| <a name="input_web_acl_arn"></a> [web\_acl\_arn](#input\_web\_acl\_arn) | n/a | `string` | n/a | yes |
+| <a name="input_schema"></a> [schema](#input\_schema) | GraphQL schema for the AppSync API | `string` | n/a | yes |
+| <a name="input_web_acl_arn"></a> [web\_acl\_arn](#input\_web\_acl\_arn) | ARN of the AWS WAF Web ACL to associate with the AppSync API | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 | ---- | ----------- |
-| <a name="output_api"></a> [api](#output\_api) | n/a |
-| <a name="output_datasource"></a> [datasource](#output\_datasource) | n/a |
-| <a name="output_resolver"></a> [resolver](#output\_resolver) | n/a |
+| <a name="output_api"></a> [api](#output\_api) | The AppSync API output |
+| <a name="output_datasource"></a> [datasource](#output\_datasource) | The AppSync datasource output |
+| <a name="output_resolver"></a> [resolver](#output\_resolver) | The AppSync resolver output |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Policy
@@ -100,6 +100,7 @@ No modules.
 The Terraform resource required is:
 
 ```golang
+# apply role — full permissions for terraform apply
 resource "aws_iam_policy" "terraform_pike" {
   name_prefix = "terraform_pike"
   path        = "/"
@@ -147,9 +148,11 @@ resource "aws_iam_policy" "terraform_pike" {
             "Effect": "Allow",
             "Action": [
                 "appsync:CreateApi",
+                "appsync:CreateApiKey",
                 "appsync:CreateDataSource",
                 "appsync:CreateResolver",
                 "appsync:DeleteApi",
+                "appsync:DeleteApiKey",
                 "appsync:DeleteDataSource",
                 "appsync:DeleteResolver",
                 "appsync:GetApi",
@@ -157,9 +160,8 @@ resource "aws_iam_policy" "terraform_pike" {
                 "appsync:GetResolver",
                 "appsync:ListTagsForResource",
                 "appsync:SetWebACL",
-                "appsync:TagResource",
-                "appsync:UntagResource",
                 "appsync:UpdateApi",
+                "appsync:UpdateApiKey",
                 "appsync:UpdateDataSource",
                 "appsync:UpdateResolver"
             ],
@@ -211,14 +213,15 @@ resource "aws_iam_policy" "terraform_pike" {
                 "iam:AttachRolePolicy",
                 "iam:CreateRole",
                 "iam:DeleteRole",
+                "iam:DeleteRolePolicy",
                 "iam:DetachRolePolicy",
                 "iam:GetRole",
+                "iam:GetRolePolicy",
                 "iam:ListAttachedRolePolicies",
                 "iam:ListInstanceProfilesForRole",
                 "iam:ListRolePolicies",
                 "iam:PassRole",
-                "iam:TagRole",
-                "iam:UntagRole"
+                "iam:PutRolePolicy"
             ],
             "Resource": [
                 "*"
@@ -262,6 +265,113 @@ resource "aws_iam_policy" "terraform_pike" {
                 "wafv2:GetWebACL",
                 "wafv2:GetWebACLForResource",
                 "wafv2:PutPermissionPolicy"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+})
+}
+
+# plan role — read-only permissions for terraform plan
+resource "aws_iam_policy" "terraform_pike_plan" {
+  name_prefix = "terraform_pike_plan"
+  path        = "/"
+  description = "Pike Autogenerated policy from IAC"
+
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "amplify:GetWebACLForResource"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "apigateway:SetWebACL"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": [
+                "apprunner:AssociateWebAcl",
+                "apprunner:DescribeWebAclForService",
+                "apprunner:DisassociateWebAcl"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor3",
+            "Effect": "Allow",
+            "Action": [
+                "appsync:GetApi",
+                "appsync:GetDataSource",
+                "appsync:GetResolver",
+                "appsync:ListTagsForResource",
+                "appsync:SetWebACL"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor4",
+            "Effect": "Allow",
+            "Action": [
+                "cognito-idp:AssociateWebACL",
+                "cognito-idp:DisassociateWebACL",
+                "cognito-idp:GetWebACLForResource"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor5",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:AssociateVerifiedAccessInstanceWebAcl",
+                "ec2:DescribeVerifiedAccessInstanceWebAclAssociations",
+                "ec2:DisassociateVerifiedAccessInstanceWebAcl",
+                "ec2:GetVerifiedAccessInstanceWebAcl"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor6",
+            "Effect": "Allow",
+            "Action": [
+                "elasticloadbalancing:SetWebACL"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor7",
+            "Effect": "Allow",
+            "Action": [
+                "wafv2:AssociateWebACL",
+                "wafv2:DisassociateWebACL",
+                "wafv2:GetWebACL",
+                "wafv2:GetWebACLForResource"
             ],
             "Resource": [
                 "*"

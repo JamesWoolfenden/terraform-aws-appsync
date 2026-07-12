@@ -1,0 +1,109 @@
+{
+  "findings": [
+    {
+      "confidence": "high",
+      "explanation": "cloudwatch_logs_role_arn must be an IAM role ARN that AppSync assumes to publish logs, but this module wires it to aws_cloudwatch_log_group.api.arn, a log-group ARN. A dedicated aws_iam_role.appsync already exists with the correct trust policy and the AWSAppSyncPushToCloudWatchLogs managed policy attached, but it is used elsewhere (as the Lambda datasource service_role_arn) instead of here. Both values are plain strings so no type-level rule catches the swap; at apply/runtime AWS AppSync will reject the malformed role ARN and log_config silently produces no logs.",
+      "file": "aws_appsync_graphql_api.main.tf",
+      "id": "HOLDEN_AI_001",
+      "line": 8,
+      "principle": "logging-and-monitoring",
+      "related_resources": [
+        "aws_cloudwatch_log_group.api",
+        "aws_iam_role.appsync"
+      ],
+      "remediation": "Set cloudwatch_logs_role_arn = aws_iam_role.appsync.arn (or a dedicated logging-only role) instead of aws_cloudwatch_log_group.api.arn.",
+      "resource": "aws_appsync_graphql_api.main",
+      "severity": "HIGH",
+      "title": "AppSync log_config.cloudwatch_logs_role_arn points at the CloudWatch log group, not an IAM role"
+    },
+    {
+      "confidence": "high",
+      "explanation": "The AWS_LAMBDA datasource service_role_arn is aws_iam_role.appsync, whose only attached policy is the AWS-managed AWSAppSyncPushToCloudWatchLogs policy (aws_iam_role.appsync.tf:20-23). No policy anywhere in this module grants lambda:InvokeFunction on var.lambda_resolver_arn. Each resource passes in isolation (a role exists, a policy is attached, a datasource references a role) but the composition means every request through aws_appsync_resolver.user will fail at runtime with AccessDeniedException when AppSync tries to invoke the backing Lambda.",
+      "file": "aws_appsync_datasource.user.tf",
+      "id": "HOLDEN_AI_002",
+      "line": 5,
+      "principle": "identity-and-access",
+      "related_resources": [
+        "aws_iam_role.appsync",
+        "aws_iam_role_policy_attachment.attach",
+        "var.lambda_resolver_arn"
+      ],
+      "remediation": "Attach an inline or customer-managed policy to aws_iam_role.appsync granting lambda:InvokeFunction on var.lambda_resolver_arn, e.g. via an aws_iam_role_policy referencing a data.aws_iam_policy_document scoped to that ARN.",
+      "resource": "aws_appsync_datasource.user",
+      "severity": "HIGH",
+      "title": "AppSync Lambda datasource service role has no permission to invoke the Lambda function"
+    },
+    {
+      "confidence": "high",
+      "explanation": "variables.tf defines resolver_type and resolver_field (each with non-empty validation) specifically to parameterize this resolver, and example/examplea/module.appsync.tf:9-10 passes resolver_field = singlePost and resolver_type = Query expecting them to take effect. But aws_appsync_resolver.user hardcodes type = Query and field = singlePost as literals, so the inputs are dead code; any consumer passing a different resolver_type/resolver_field (e.g. Mutation/createPost) would silently still get a Query.singlePost resolver. Holden HLD_TF_037 flags each variable as merely unreferenced; it cannot see that a sibling module call wires them in expecting real effect, which is what elevates this from a style nit to a functional bug.",
+      "file": "aws_appsync_resolver.user.tf",
+      "id": "HOLDEN_AI_003",
+      "line": 3,
+      "principle": "maintainability",
+      "related_resources": [
+        "var.resolver_type",
+        "var.resolver_field",
+        "module.appsync (example/examplea/module.appsync.tf:9-10)"
+      ],
+      "remediation": "Reference the variables in the resolver: type = var.resolver_type, field = var.resolver_field.",
+      "resource": "aws_appsync_resolver.user",
+      "severity": "MEDIUM",
+      "supersedes": "HLD_TF_037",
+      "title": "Resolver hardcodes Query.singlePost, silently ignoring the resolver_type/resolver_field inputs the example wires in"
+    },
+    {
+      "confidence": "high",
+      "explanation": "example/examplea/aws_kms_key.example.tf only declares aws_kms_key.app_kms_key (used correctly as module.appsync kms_key_id on line 11), but module.waf2 kms_key_arn on line 17 references aws_kms_key.example, a resource address that does not exist anywhere in this configuration. The vendored waf2 module uses kms_key_arn to encrypt its S3 log bucket and Kinesis Firehose delivery stream, so this reference resolving to nothing means the example cannot be planned/applied at all, and WAF log encryption is unverifiable until fixed. This is a two-file, cross-resource-name bug (likely left over from renaming the key resource) that a single-resource attribute rule cannot catch.",
+      "file": "example/examplea/module.appsync.tf",
+      "id": "HOLDEN_AI_004",
+      "line": 17,
+      "principle": "encryption",
+      "related_resources": [
+        "aws_kms_key.app_kms_key"
+      ],
+      "remediation": "Change kms_key_arn = aws_kms_key.example.arn to kms_key_arn = aws_kms_key.app_kms_key.arn on example/examplea/module.appsync.tf:17.",
+      "resource": "module.waf2",
+      "severity": "MEDIUM",
+      "title": "Example references undeclared aws_kms_key.example, breaking WAF log encryption wiring"
+    },
+    {
+      "confidence": "medium",
+      "explanation": "authentication_type is a literal API_KEY with no variable to select AWS_IAM, AMAZON_COGNITO_USER_POOLS, or OPENID_CONNECT, and this module contains no aws_appsync_api_key resource. API_KEY is AppSync weakest auth mode (no caller identity, coarse-grained). Every consumer of this module is forced into it, and since the module never provisions a key, the API is unusable until something outside the module creates one, an undocumented manual step not mentioned in the README.",
+      "file": "aws_appsync_graphql_api.main.tf",
+      "id": "HOLDEN_AI_005",
+      "line": 3,
+      "principle": "identity-and-access",
+      "related_resources": [],
+      "remediation": "Expose authentication_type as a variable (default API_KEY for backward compatibility) and, when API_KEY is selected, create an aws_appsync_api_key resource with an explicit expires value inside the module.",
+      "resource": "aws_appsync_graphql_api.main",
+      "severity": "MEDIUM",
+      "title": "Module hardcodes authentication_type = API_KEY with no way to opt into IAM/Cognito/OIDC auth and no aws_appsync_api_key resource"
+    },
+    {
+      "confidence": "medium",
+      "explanation": "The suppression comment checkov:skip=CKV2_AWS_78 (WAF WebACL association managed outside this module) asserts WAF is attached elsewhere, but aws_wafv2_web_acl_association.example.tf associates a Web ACL with this exact API inside this module, and web_acl_arn is a required variable (non-empty validation) so it is not optional. The stale or incorrect rationale could mislead a future maintainer who removes the in-module association (believing it is redundant with an external one) into leaving the checkov suppression in place with no WAF coverage at all.",
+      "file": "aws_appsync_graphql_api.main.tf",
+      "id": "HOLDEN_AI_006",
+      "line": 2,
+      "principle": "governance",
+      "related_resources": [
+        "aws_wafv2_web_acl_association.example"
+      ],
+      "remediation": "Update or remove the checkov:skip comment to reflect that WAF association is in fact managed by this module (aws_wafv2_web_acl_association.example), or delete the association resource here if it is genuinely intended to be managed externally.",
+      "resource": "aws_appsync_graphql_api.main",
+      "severity": "LOW",
+      "title": "checkov:skip rationale claims WAF association is external, but this module defines a mandatory WAF association itself"
+    }
+  ],
+  "suggested_policies": [
+    {
+      "rationale": "aws_appsync_graphql_api has no existing policy (coverage_by_type only lists HLD_AWS_205, which checks that log_config exists, not that its role reference resolves to an aws_iam_role) verifying the CloudWatch logging role is actually an IAM role rather than any other ARN-shaped resource. This is exactly the bug found live in this repo (finding HOLDEN_AI_001) and is broadly applicable to any AppSync module.",
+      "yaml": "id: HLD_PROPOSED_001\nname: AppSync GraphQL API CloudWatch logging role must reference an IAM role\nprinciple: logging-and-monitoring\nseverity: HIGH\nrationale: |\n  aws_appsync_graphql_api.log_config.cloudwatch_logs_role_arn must be the ARN\n  of an IAM role that AWS AppSync assumes to publish logs to CloudWatch. If\n  this attribute is wired to the wrong resource (for example a CloudWatch log\n  group ARN instead of an IAM role ARN), AppSync cannot assume it and log\n  publishing silently fails, defeating the purpose of enabling log_config in\n  the first place. This is easy to get wrong because both ARNs are plain\n  strings and pass any type check.\nremediation: |\n  Point cloudwatch_logs_role_arn at an aws_iam_role resource that trusts\n  appsync.amazonaws.com and has the AWSAppSyncPushToCloudWatchLogs managed\n  policy attached, e.g.:\n\n  ```hcl\n  log_config {\n    field_log_level          = var.log_level\n    cloudwatch_logs_role_arn = aws_iam_role.appsync_logging.arn\n  }\n  ```\nresources:\n  aws_appsync_graphql_api:\n    references:\n      via: log_config.cloudwatch_logs_role_arn\n      type: aws_iam_role\n"
+    },
+    {
+      "rationale": "aws_appsync_datasource has zero existing policy coverage (absent from coverage_by_type entirely). This rule catches AWS_LAMBDA datasources whose service role has no inline policy granting lambda:InvokeFunction, which is exactly the bug found live in this repo (finding HOLDEN_AI_002). It is flagged requires_dsl_extension because it cannot currently see permissions granted via an attached managed policy (ARN-only, e.g. AWSAppSyncPushToCloudWatchLogs) or via a separate aws_iam_policy plus aws_iam_role_policy_attachment pair; holden would need a lookup of AWS-managed-policy action sets, or the ability to resolve a referenced customer-managed policy document actions through an attachment edge, to fully close this gap.",
+      "requires_dsl_extension": true,
+      "yaml": "id: HLD_PROPOSED_002\nname: AWS_LAMBDA AppSync datasources must use a role permitted to invoke the target Lambda\nprinciple: identity-and-access\nseverity: HIGH\nrationale: |\n  An aws_appsync_datasource with type AWS_LAMBDA calls lambda:InvokeFunction\n  using the IAM role at service_role_arn. If that role has no policy granting\n  lambda:InvokeFunction, the datasource fails at runtime with\n  AccessDeniedException and every resolver backed by it is non-functional.\n  This check only inspects inline aws_iam_role_policy documents; it cannot\n  currently resolve the action set of a managed policy attached only by ARN\n  (e.g. via aws_iam_role_policy_attachment), which is a known gap - see\n  requires_dsl_extension.\nremediation: |\n  Attach an inline or customer-managed policy granting lambda:InvokeFunction\n  on the target function ARN to the datasource's service_role_arn role:\n\n  ```hcl\n  resource \"aws_iam_role_policy\" \"invoke\" {\n    role   = aws_iam_role.appsync.name\n    policy = data.aws_iam_policy_document.invoke_lambda.json\n  }\n  ```\nresources:\n  aws_appsync_datasource:\n    filter:\n      path: type\n      equals: AWS_LAMBDA\n    references:\n      via: service_role_arn\n      type: aws_iam_role\n      must:\n        requires_companion:\n          type: aws_iam_role_policy\n          via: role\n          where:\n            path: policy\n            matches: \".*lambda:InvokeFunction.*\"\n"
+    }
+  ]
+}

@@ -1,16 +1,29 @@
-variable "common_tags" {
-  description = "This is to help you add tags to your cloud objects"
-  type        = map(any)
-  default = {
-    module = "Terraform-aws-appsync"
+variable "api_name" {
+  type        = string
+  description = "Name of the AppSync api"
+
+  validation {
+    condition     = length(var.api_name) > 0
+    error_message = "api_name must not be empty."
   }
 }
-variable "api_name" {
-  type = string
-}
+
 variable "datasource_user_name" {
-  type = string
+  type        = string
+  description = "Name of the datasource user"
+
+  validation {
+    condition     = length(var.datasource_user_name) > 0
+    error_message = "datasource_user_name must not be empty."
+  }
 }
+
 variable "lambda_resolver_arn" {
-  type = string
+  type        = string
+  description = "ARN of the Lambda function used as the resolver"
+
+  validation {
+    condition     = length(var.lambda_resolver_arn) > 0
+    error_message = "lambda_resolver_arn must not be empty."
+  }
 }

@@ -1,0 +1,28 @@
+id: HLD_PROPOSED_001
+name: AppSync GraphQL API CloudWatch logging role must reference an IAM role
+principle: logging-and-monitoring
+severity: HIGH
+rationale: |
+  aws_appsync_graphql_api.log_config.cloudwatch_logs_role_arn must be the ARN
+  of an IAM role that AWS AppSync assumes to publish logs to CloudWatch. If
+  this attribute is wired to the wrong resource (for example a CloudWatch log
+  group ARN instead of an IAM role ARN), AppSync cannot assume it and log
+  publishing silently fails, defeating the purpose of enabling log_config in
+  the first place. This is easy to get wrong because both ARNs are plain
+  strings and pass any type check.
+remediation: |
+  Point cloudwatch_logs_role_arn at an aws_iam_role resource that trusts
+  appsync.amazonaws.com and has the AWSAppSyncPushToCloudWatchLogs managed
+  policy attached, e.g.:
+
+  ```hcl
+  log_config {
+    field_log_level          = var.log_level
+    cloudwatch_logs_role_arn = aws_iam_role.appsync_logging.arn
+  }
+  ```
+resources:
+  aws_appsync_graphql_api:
+    references:
+      via: log_config.cloudwatch_logs_role_arn
+      type: aws_iam_role

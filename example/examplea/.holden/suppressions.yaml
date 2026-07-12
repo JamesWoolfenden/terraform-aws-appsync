@@ -1,0 +1,9 @@
+suppressions:
+  - policy_id: HLD_TF_029
+    resource_id: workspace
+    reason: Count is inflated by scanning example/ and the vendored terraform-aws-waf2 module alongside the core module; not representative of what a consumer deploys from this module alone.
+    approved_by: james.woolfenden@gmail.com
+  - policy_id: HLD_TF_030
+    resource_id: workspace
+    reason: Count is inflated by scanning example/ and the vendored terraform-aws-waf2 module alongside the core module; not representative of what a consumer deploys from this module alone.
+    approved_by: james.woolfenden@gmail.com

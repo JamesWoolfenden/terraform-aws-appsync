@@ -1,6 +1,10 @@
-resource "aws_kms_key" "example" {
+resource "aws_kms_key" "app_kms_key" {
   # checkov:skip=CKV2_AWS_64: For example only, key policy managed via IAM
-  enable_key_rotation = true
+  enable_key_rotation     = true
+  deletion_window_in_days = 7
+  lifecycle {
+    prevent_destroy = true
+  }
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{

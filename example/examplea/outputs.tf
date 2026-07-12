@@ -1,9 +1,14 @@
 output "datasource" {
-  value = module.appsync.datasource
+  description = "The AppSync datasource output"
+  value       = module.appsync.datasource
 }
+
 output "api" {
-  value = module.appsync.api
+  description = "The AppSync API output"
+  value       = module.appsync.api
 }
+
 output "resolver" {
-  value = module.appsync.resolver
+  description = "The AppSync resolver output"
+  value       = module.appsync.resolver
 }

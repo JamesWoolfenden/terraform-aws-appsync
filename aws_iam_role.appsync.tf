@@ -1,6 +1,7 @@
 resource "aws_iam_role" "appsync" {
-  name               = var.appsync_rolename
-  assume_role_policy = <<POLICY
+  name                 = var.appsync_rolename
+  max_session_duration = 43200
+  assume_role_policy   = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -14,14 +15,26 @@ resource "aws_iam_role" "appsync" {
   ]
 }
 POLICY
-  tags               = var.common_tags
+
 }
 resource "aws_iam_role_policy_attachment" "attach" {
   role       = aws_iam_role.appsync.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSAppSyncPushToCloudWatchLogs"
 }
-variable "appsync_rolename" {
-  type        = string
-  description = "The name of the role to attach to appsync"
-  default     = "Appsync"
+
+resource "aws_iam_role_policy" "invoke_lambda" {
+  name   = "invoke-resolver-lambda"
+  role   = aws_iam_role.appsync.name
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "lambda:InvokeFunction",
+      "Resource": "${var.lambda_resolver_arn}"
+    }
+  ]
+}
+POLICY
 }
